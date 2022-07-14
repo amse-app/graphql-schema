@@ -1,0 +1,31 @@
+{
+  "name": "@amse/graphql-schema",
+  "version": "1.0.0",
+  "description": "The schema of the amse api",
+  "main": "index.js",
+  "scripts": {
+    "precommit": "lint-staged",
+    "build": "rm -f schema.graphql && cat schema/*.graphql >> schema.graphql"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amse-app/graphql-schema.git"
+  },
+  "author": "Paul Barbenheim",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/amse-app/graphql-schema/issues"
+  },
+  "homepage": "https://github.com/amse-app/graphql-schema#readme",
+  "dependencies": {
+    "graphql": "^16.5.0",
+    "graphql-schema-linter": "^3.0.1",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3"
+  },
+  "lint-staged": {
+    "*.graphql": [
+      "graphql-schema-linter schema/*.graphql"
+    ]
+  }
+}
