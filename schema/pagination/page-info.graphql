@@ -1,0 +1,11 @@
+"PageInfo type according to the Relay Cursor Connections Specification"
+type PageInfo {
+  "Tells if a previous page is availabe"
+  hasPreviousPage: Boolean!
+  "Tells if a next page is available"
+  hasNextPage: Boolean!
+  "The first cursor of the corresponding edges"
+  startCursor: String!
+  "The last cursor of the corresponding edges"
+  endCursor: String!
+}

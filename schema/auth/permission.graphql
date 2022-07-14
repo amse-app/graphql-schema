@@ -1,0 +1,11 @@
+"All possible permissions of a user"
+enum Permission {
+  "Create, update, delete users"
+  WRITE_USERS
+  "read users"
+  READ_USERS
+  "update, delete the own profile"
+  WRITE_PROFILE
+  "read the own profile"
+  READ_PROFILE
+}

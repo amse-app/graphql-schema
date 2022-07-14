@@ -1,0 +1,33 @@
+directive @auth(
+  perm: [Permission!]! = []
+  public: Boolean = false
+) on FIELD_DEFINITION
+"All possible permissions of a user"
+enum Permission {
+  "Create, update, delete users"
+  WRITE_USERS
+  "read users"
+  READ_USERS
+  "update, delete the own profile"
+  WRITE_PROFILE
+  "read the own profile"
+  READ_PROFILE
+}
+"The root query type"
+type Query {
+  "A test value"
+  hello: String!
+}
+"PageInfo type according to the Relay Cursor Connections Specification"
+type PageInfo {
+  "Tells if a previous page is availabe"
+  hasPreviousPage: Boolean!
+  "Tells if a next page is available"
+  hasNextPage: Boolean!
+  "The first cursor of the corresponding edges"
+  startCursor: String!
+  "The last cursor of the corresponding edges"
+  endCursor: String!
+}
+"The scalar of the PaginationCursors"
+scalar PaginationCursor

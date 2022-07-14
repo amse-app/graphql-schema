@@ -1,0 +1,5 @@
+"The root query type"
+type Query {
+  "A test value"
+  hello: String!
+}

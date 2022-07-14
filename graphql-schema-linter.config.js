@@ -12,6 +12,8 @@ module.exports = {
     "input-object-values-have-descriptions",
     "types-are-capitalized",
     "types-have-descriptions",
+    "relay-connection-types-spec",
+    "relay-connection-arguments-spec",
   ],
   rulesOptions: {},
 };

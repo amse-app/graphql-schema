@@ -1,0 +1,4 @@
+directive @auth(
+  perm: [Permission!]! = []
+  public: Boolean = false
+) on FIELD_DEFINITION
