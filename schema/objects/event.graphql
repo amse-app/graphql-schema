@@ -1,0 +1,64 @@
+"Events are the clients of the application, which seperate data across the graph"
+type Event implements Node {
+  "Globally unique id"
+  gid: ID!
+  "Globally unique id with timeliness"
+  tid: AmseTID!
+
+  "unique identifier for this event"
+  id: String!
+  "name of this event"
+  name: String!
+  "description of this event"
+  description: String
+
+  "The user responsible for this event"
+  owner: User!
+
+  "The full AuditLog of all items part of this event, except users"
+  fullAuditLog: AuditConnection!
+
+  "The competitions of this event"
+  competitions: CompetitionConnection!
+  "The disciplines of this event"
+  disciplines: DisciplineConnection!
+  "The groups of this event"
+  groups: GroupConnection!
+  "The participants of this event"
+  participants: ParticipantConnection!
+  "The teams of this event"
+  teams: TeamConnection!
+  "The Users with access to this event"
+  users: UserEventsRelConnection!
+  "The attributes of this event"
+  attributes: AttributeConnection!
+  "The results of this event"
+  results: ResultConnection!
+
+  "The creation date of this event"
+  createdAt: DateTime!
+  "The last time this event was updated"
+  updatedAt: DateTime!
+  "The user who created this event"
+  createdBy: User!
+  "The last user who modified this event"
+  updatedBy: User!
+  "The complete auditLog regarding this event object"
+  auditLog: AuditConnection!
+}
+
+"The Event connection-type"
+type EventConnection {
+  "Count of the returned events"
+  count: Int!
+  "The EventEdges"
+  edges: [EventEdge!]!
+  "The according PageInfo"
+  pageInfo: PageInfo!
+}
+
+"The Event edge-type"
+type EventEdge {
+  cursor: PaginationCursor!
+  node: Event!
+}

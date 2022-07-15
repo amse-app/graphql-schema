@@ -1,0 +1,32 @@
+"The amse tid scalar; serialized to a string"
+scalar AmseTID
+
+"A Date serialized as int in milliseconds since unix epoch"
+scalar Date
+
+"A Date with time serialized as int in milliseconds since unix epoch"
+scalar DateTime
+
+"A Duration in milliseconds"
+scalar Duration
+
+"The Node interface for refetching"
+interface Node {
+  "Globally unique id"
+  gid: ID!
+  "Globally unique id with timeliness check"
+  tid: AmseTID!
+
+  "Wether this post is archived"
+  archived: Boolean!
+  "The creation date of this node"
+  createdAt: Date!
+  "The last time this node was updated"
+  updatedAt: Date!
+  "The user who created this node"
+  createdBy: User!
+  "The user who last updated this node"
+  updatedBy: User!
+  "the full AuditLog of this node"
+  auditLog: AuditConnection!
+}

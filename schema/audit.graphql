@@ -1,0 +1,41 @@
+type AuditEntry implements Node {
+  "Globally unique id"
+  gid: ID!
+  "Globally unique id with timeliness check"
+  tid: AmseTID!
+
+  of: Node!
+  by: User!
+  at: DateTime!
+  entity: String!
+  oldValue: String!
+  newValue: String!
+  to: Node
+  action: AuditAction!
+
+  "The creation date of this auditentry"
+  createdAt: Date!
+  "The last time this node was updated"
+  updatedAt: Date!
+  "The user who created this audit entry"
+  createdBy: User!
+  "The user who last updated this audit entry"
+  updatedBy: User!
+  "the full AuditLog of this audit entry"
+  auditLog: AuditConnection!
+}
+enum AuditAction {
+  CREATE
+  UPDATE_FIELD
+  UPDATE_RELATION
+  ARCHIVED
+}
+type AuditConnection {
+  count: Int!
+  edges: [AuditEntryEdge!]!
+  pageInfo: PageInfo!
+}
+type AuditEntryEdge {
+  cursor: PaginationCursor!
+  node: AuditEntry!
+}

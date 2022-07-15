@@ -1,3 +1,110 @@
+type User implements Node {
+  "Globally unique id"
+  gid: ID!
+  "Globally unique id with timeliness check"
+  tid: AmseTID!
+
+  "The globally unique username"
+  username: String!
+  "The (real) name of the user"
+  name: String!
+  "The preferred nickname of the user"
+  nickname: String!
+  "The events of the user"
+  events: UserEventsRelConnection!
+
+  "The creation date of this user"
+  createdAt: Date!
+  "The last time this user was updated"
+  updatedAt: Date!
+  "The user who created this user"
+  createdBy: User!
+  "The user who last updated this user"
+  updatedBy: User!
+  "the full AuditLog of this user"
+  auditLog: AuditConnection!
+}
+type UserConnection {
+  count: Int!
+  edges: [UserEdge!]!
+  pageInfo: PageInfo!
+}
+type UserEdge {
+  cursor: PaginationCursor!
+  node: User!
+}
+
+type UserEventsRel implements Node {
+  "Globally unique id"
+  gid: ID!
+  "Globally unique id with timeliness check"
+  tid: AmseTID!
+
+  event: Event!
+  user: User!
+  permissions: [Permission!]!
+
+  "The creation date of this UsersEventsRel"
+  createdAt: Date!
+  "The last time this UsersEventsRel was updated"
+  updatedAt: Date!
+  "The user who created this UsersEventsRel"
+  createdBy: User!
+  "The user who last updated this UsersEventsRel"
+  updatedBy: User!
+  "the full AuditLog of this UsersEventsRel"
+  auditLog: AuditConnection!
+}
+type UserEventsRelConnection {
+  count: Int!
+  edges: [UserEventsRelEdge!]!
+  pageInfo: PageInfo!
+}
+type UserEventsRelEdge {
+  cursor: PaginationCursor!
+  node: UserEventsRel!
+}
+type AuditEntry implements Node {
+  "Globally unique id"
+  gid: ID!
+  "Globally unique id with timeliness check"
+  tid: AmseTID!
+
+  of: Node!
+  by: User!
+  at: DateTime!
+  entity: String!
+  oldValue: String!
+  newValue: String!
+  to: Node
+  action: AuditAction!
+
+  "The creation date of this auditentry"
+  createdAt: Date!
+  "The last time this node was updated"
+  updatedAt: Date!
+  "The user who created this audit entry"
+  createdBy: User!
+  "The user who last updated this audit entry"
+  updatedBy: User!
+  "the full AuditLog of this audit entry"
+  auditLog: AuditConnection!
+}
+enum AuditAction {
+  CREATE
+  UPDATE_FIELD
+  UPDATE_RELATION
+  ARCHIVED
+}
+type AuditConnection {
+  count: Int!
+  edges: [AuditEntryEdge!]!
+  pageInfo: PageInfo!
+}
+type AuditEntryEdge {
+  cursor: PaginationCursor!
+  node: AuditEntry!
+}
 directive @auth(
   perm: [Permission!]! = []
   public: Boolean = false
@@ -13,10 +120,44 @@ enum Permission {
   "read the own profile"
   READ_PROFILE
 }
+"The amse tid scalar; serialized to a string"
+scalar AmseTID
+
+"A Date serialized as int in milliseconds since unix epoch"
+scalar Date
+
+"A Date with time serialized as int in milliseconds since unix epoch"
+scalar DateTime
+
+"A Duration in milliseconds"
+scalar Duration
+
+"The Node interface for refetching"
+interface Node {
+  "Globally unique id"
+  gid: ID!
+  "Globally unique id with timeliness check"
+  tid: AmseTID!
+
+  "Wether this post is archived"
+  archived: Boolean!
+  "The creation date of this node"
+  createdAt: Date!
+  "The last time this node was updated"
+  updatedAt: Date!
+  "The user who created this node"
+  createdBy: User!
+  "The user who last updated this node"
+  updatedBy: User!
+  "the full AuditLog of this node"
+  auditLog: AuditConnection!
+}
 "The root query type"
 type Query {
-  "A test value"
-  hello: String!
+  event(id: String!): Event
+  events: EventConnection!
+
+  users: UserConnection!
 }
 "PageInfo type according to the Relay Cursor Connections Specification"
 type PageInfo {
@@ -31,3 +172,67 @@ type PageInfo {
 }
 "The scalar of the PaginationCursors"
 scalar PaginationCursor
+"Events are the clients of the application, which seperate data across the graph"
+type Event implements Node {
+  "Globally unique id"
+  gid: ID!
+  "Globally unique id with timeliness"
+  tid: AmseTID!
+
+  "unique identifier for this event"
+  id: String!
+  "name of this event"
+  name: String!
+  "description of this event"
+  description: String
+
+  "The user responsible for this event"
+  owner: User!
+
+  "The full AuditLog of all items part of this event, except users"
+  fullAuditLog: AuditConnection!
+
+  "The competitions of this event"
+  competitions: CompetitionConnection!
+  "The disciplines of this event"
+  disciplines: DisciplineConnection!
+  "The groups of this event"
+  groups: GroupConnection!
+  "The participants of this event"
+  participants: ParticipantConnection!
+  "The teams of this event"
+  teams: TeamConnection!
+  "The Users with access to this event"
+  users: UserEventsRelConnection!
+  "The attributes of this event"
+  attributes: AttributeConnection!
+  "The results of this event"
+  results: ResultConnection!
+
+  "The creation date of this event"
+  createdAt: DateTime!
+  "The last time this event was updated"
+  updatedAt: DateTime!
+  "The user who created this event"
+  createdBy: User!
+  "The last user who modified this event"
+  updatedBy: User!
+  "The complete auditLog regarding this event object"
+  auditLog: AuditConnection!
+}
+
+"The Event connection-type"
+type EventConnection {
+  "Count of the returned events"
+  count: Int!
+  "The EventEdges"
+  edges: [EventEdge!]!
+  "The according PageInfo"
+  pageInfo: PageInfo!
+}
+
+"The Event edge-type"
+type EventEdge {
+  cursor: PaginationCursor!
+  node: Event!
+}

@@ -1,0 +1,66 @@
+type User implements Node {
+  "Globally unique id"
+  gid: ID!
+  "Globally unique id with timeliness check"
+  tid: AmseTID!
+
+  "The globally unique username"
+  username: String!
+  "The (real) name of the user"
+  name: String!
+  "The preferred nickname of the user"
+  nickname: String!
+  "The events of the user"
+  events: UserEventsRelConnection!
+
+  "The creation date of this user"
+  createdAt: Date!
+  "The last time this user was updated"
+  updatedAt: Date!
+  "The user who created this user"
+  createdBy: User!
+  "The user who last updated this user"
+  updatedBy: User!
+  "the full AuditLog of this user"
+  auditLog: AuditConnection!
+}
+type UserConnection {
+  count: Int!
+  edges: [UserEdge!]!
+  pageInfo: PageInfo!
+}
+type UserEdge {
+  cursor: PaginationCursor!
+  node: User!
+}
+
+type UserEventsRel implements Node {
+  "Globally unique id"
+  gid: ID!
+  "Globally unique id with timeliness check"
+  tid: AmseTID!
+
+  event: Event!
+  user: User!
+  permissions: [Permission!]!
+
+  "The creation date of this UsersEventsRel"
+  createdAt: Date!
+  "The last time this UsersEventsRel was updated"
+  updatedAt: Date!
+  "The user who created this UsersEventsRel"
+  createdBy: User!
+  "The user who last updated this UsersEventsRel"
+  updatedBy: User!
+  "the full AuditLog of this UsersEventsRel"
+  auditLog: AuditConnection!
+}
+type UserEventsRelConnection {
+  count: Int!
+  edges: [UserEventsRelEdge!]!
+  pageInfo: PageInfo!
+}
+type UserEventsRelEdge {
+  cursor: PaginationCursor!
+  node: UserEventsRel!
+}

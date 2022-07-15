@@ -1,5 +1,7 @@
 "The root query type"
 type Query {
-  "A test value"
-  hello: String!
+  event(id: String!): Event
+  events: EventConnection!
+
+  users: UserConnection!
 }
