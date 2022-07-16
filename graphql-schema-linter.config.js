@@ -1,6 +1,5 @@
 module.exports = {
   rules: [
-    "arguments-have-descriptions",
     "defined-types-are-used",
     "deprecations-have-a-reason",
     "descriptions-are-capitalized",
