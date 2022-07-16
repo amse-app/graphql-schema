@@ -1,7 +1,17 @@
 "The root query type"
 type Query {
   event(id: String!): Event
-  events: EventConnection!
+  events(
+    before: PaginationCursor
+    after: PaginationCursor
+    first: Int
+    last: Int
+  ): EventConnection!
 
-  users: UserConnection!
+  users(
+    before: PaginationCursor
+    after: PaginationCursor
+    first: Int
+    last: Int
+  ): UserConnection!
 }

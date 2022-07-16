@@ -1,5 +1,5 @@
 "Events are the clients of the application, which seperate data across the graph"
-type Event implements Node {
+type Event implements Node & UserCreated {
   "Globally unique id"
   gid: ID!
   "Globally unique id with timeliness"
@@ -16,25 +16,90 @@ type Event implements Node {
   owner: User!
 
   "The full AuditLog of all items part of this event, except users"
-  fullAuditLog: AuditConnection!
+  fullAuditLog(
+    before: PaginationCursor
+    after: PaginationCursor
+    first: Int
+    last: Int
+  ): AuditConnection!
 
   "The competitions of this event"
-  competitions: CompetitionConnection!
+  competitions(
+    before: PaginationCursor
+    after: PaginationCursor
+    first: Int
+    last: Int
+  ): CompetitionConnection!
   "The disciplines of this event"
-  disciplines: DisciplineConnection!
+  disciplines(
+    before: PaginationCursor
+    after: PaginationCursor
+    first: Int
+    last: Int
+  ): DisciplineConnection!
   "The groups of this event"
-  groups: GroupConnection!
+  groups(
+    before: PaginationCursor
+    after: PaginationCursor
+    first: Int
+    last: Int
+  ): GroupConnection!
   "The participants of this event"
-  participants: ParticipantConnection!
+  participants(
+    before: PaginationCursor
+    after: PaginationCursor
+    first: Int
+    last: Int
+  ): ParticipantConnection!
   "The teams of this event"
-  teams: TeamConnection!
+  teams(
+    before: PaginationCursor
+    after: PaginationCursor
+    first: Int
+    last: Int
+  ): TeamConnection!
   "The Users with access to this event"
-  users: UserEventsRelConnection!
-  "The attributes of this event"
-  attributes: AttributeConnection!
+  users(
+    before: PaginationCursor
+    after: PaginationCursor
+    first: Int
+    last: Int
+  ): UserEventsRelConnection!
+  "The attributes of this event (entity)"
+  attributes(
+    before: PaginationCursor
+    after: PaginationCursor
+    first: Int
+    last: Int
+  ): AttributeValueConnection!
   "The results of this event"
-  results: ResultConnection!
+  results(
+    before: PaginationCursor
+    after: PaginationCursor
+    first: Int
+    last: Int
+  ): ResultConnection!
+  "The scorings of this event"
+  scorings(
+    before: PaginationCursor
+    after: PaginationCursor
+    first: Int
+    last: Int
+  ): ScoringConnection!
 
+  "Get an ShortIdentifiable bu its short"
+  short(short: Short!): ShortIdentifiable
+
+  "Get all attributes in this event not in this event-entity"
+  allAttributes(
+    before: PaginationCursor
+    after: PaginationCursor
+    first: Int
+    last: Int
+  ): AttributeConnection!
+
+  "Wether this entity is archived"
+  archived: Boolean!
   "The creation date of this event"
   createdAt: DateTime!
   "The last time this event was updated"
@@ -44,7 +109,12 @@ type Event implements Node {
   "The last user who modified this event"
   updatedBy: User!
   "The complete auditLog regarding this event object"
-  auditLog: AuditConnection!
+  auditLog(
+    before: PaginationCursor
+    after: PaginationCursor
+    first: Int
+    last: Int
+  ): AuditConnection!
 }
 
 "The Event connection-type"
@@ -59,6 +129,8 @@ type EventConnection {
 
 "The Event edge-type"
 type EventEdge {
+  "The PaginationCursor of this Edge"
   cursor: PaginationCursor!
+  "The Node of this Edge"
   node: Event!
 }

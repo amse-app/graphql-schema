@@ -1,4 +1,4 @@
-type User implements Node {
+type User implements Node & UserCreated {
   "Globally unique id"
   gid: ID!
   "Globally unique id with timeliness check"
@@ -11,18 +11,37 @@ type User implements Node {
   "The preferred nickname of the user"
   nickname: String!
   "The events of the user"
-  events: UserEventsRelConnection!
+  events(
+    before: PaginationCursor
+    after: PaginationCursor
+    first: Int
+    last: Int
+  ): UserEventsRelConnection!
 
+  "the attributes of this entity"
+  attributes(
+    before: PaginationCursor
+    after: PaginationCursor
+    first: Int
+    last: Int
+  ): AttributeValueConnection!
+  "Wether this entity is archived"
+  archived: Boolean!
   "The creation date of this user"
-  createdAt: Date!
+  createdAt: DateTime!
   "The last time this user was updated"
-  updatedAt: Date!
+  updatedAt: DateTime!
   "The user who created this user"
   createdBy: User!
   "The user who last updated this user"
   updatedBy: User!
   "the full AuditLog of this user"
-  auditLog: AuditConnection!
+  auditLog(
+    before: PaginationCursor
+    after: PaginationCursor
+    first: Int
+    last: Int
+  ): AuditConnection!
 }
 type UserConnection {
   count: Int!
@@ -34,7 +53,7 @@ type UserEdge {
   node: User!
 }
 
-type UserEventsRel implements Node {
+type UserEventsRel implements Node & UserCreated {
   "Globally unique id"
   gid: ID!
   "Globally unique id with timeliness check"
@@ -44,16 +63,30 @@ type UserEventsRel implements Node {
   user: User!
   permissions: [Permission!]!
 
+  "the attributes of this entity"
+  attributes(
+    before: PaginationCursor
+    after: PaginationCursor
+    first: Int
+    last: Int
+  ): AttributeValueConnection!
+  "Wether this entity is archived"
+  archived: Boolean!
   "The creation date of this UsersEventsRel"
-  createdAt: Date!
+  createdAt: DateTime!
   "The last time this UsersEventsRel was updated"
-  updatedAt: Date!
+  updatedAt: DateTime!
   "The user who created this UsersEventsRel"
   createdBy: User!
   "The user who last updated this UsersEventsRel"
   updatedBy: User!
   "the full AuditLog of this UsersEventsRel"
-  auditLog: AuditConnection!
+  auditLog(
+    before: PaginationCursor
+    after: PaginationCursor
+    first: Int
+    last: Int
+  ): AuditConnection!
 }
 type UserEventsRelConnection {
   count: Int!

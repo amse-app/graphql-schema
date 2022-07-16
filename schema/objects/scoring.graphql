@@ -1,13 +1,13 @@
-type Result implements Node & UserCreated {
+union Scoreable = Participant | Team
+type Scoring implements Node & UserCreated {
   "Globally unique id"
   gid: ID!
   "Globally unique id with timeliness check"
   tid: AmseTID!
 
-  competitionDiscipline: CompetitionDisciplineRel
-  participant: Participant!
-  raw: Int!
-  points: Int!
+  group: Group!
+  value: Int!
+  of: Scoreable!
 
   "the attributes of this entity"
   attributes(
@@ -34,12 +34,12 @@ type Result implements Node & UserCreated {
     last: Int
   ): AuditConnection!
 }
-type ResultConnection {
+type ScoringConnection {
   count: Int!
-  edges: [ResultEdge!]!
+  edges: [ScoringEdge!]!
   pageInfo: PageInfo!
 }
-type ResultEdge {
+type ScoringEdge {
   cursor: PaginationCursor!
-  node: Result!
+  node: Scoring!
 }

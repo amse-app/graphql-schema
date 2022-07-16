@@ -12,17 +12,6 @@ type AuditEntry implements Node {
   newValue: String!
   to: Node
   action: AuditAction!
-
-  "The creation date of this auditentry"
-  createdAt: Date!
-  "The last time this node was updated"
-  updatedAt: Date!
-  "The user who created this audit entry"
-  createdBy: User!
-  "The user who last updated this audit entry"
-  updatedBy: User!
-  "the full AuditLog of this audit entry"
-  auditLog: AuditConnection!
 }
 enum AuditAction {
   CREATE
