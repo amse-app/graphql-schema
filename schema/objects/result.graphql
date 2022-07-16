@@ -1,3 +1,4 @@
+"Result"
 type Result implements Node & UserCreated {
   "Globally unique id"
   gid: ID!
@@ -9,7 +10,7 @@ type Result implements Node & UserCreated {
   raw: Int!
   points: Int!
 
-  "the attributes of this entity"
+  "The attributes of this entity"
   attributes(
     before: PaginationCursor
     after: PaginationCursor
@@ -26,7 +27,7 @@ type Result implements Node & UserCreated {
   createdBy: User!
   "The user who last updated this entity"
   updatedBy: User!
-  "the full AuditLog of this entity"
+  "The full AuditLog of this entity"
   auditLog(
     before: PaginationCursor
     after: PaginationCursor
@@ -34,11 +35,13 @@ type Result implements Node & UserCreated {
     last: Int
   ): AuditConnection!
 }
+"Connection type of Result"
 type ResultConnection {
   count: Int!
   edges: [ResultEdge!]!
   pageInfo: PageInfo!
 }
+"Edge type of Result"
 type ResultEdge {
   cursor: PaginationCursor!
   node: Result!

@@ -1,16 +1,14 @@
+"ConversionFunction scalar; serializes to string"
 scalar ConversionFunction
-
+"Discipline"
 type Discipline implements Node & UserCreated & ShortIdentifiable {
   "Globally unique id"
   gid: ID!
   "Globally unique id with timeliness check"
   tid: AmseTID!
 
-  "short id"
   short: Short!
-  "name"
   name: String!
-  "description"
   description: String
 
   conversionFunction: ConversionFunction!
@@ -28,7 +26,7 @@ type Discipline implements Node & UserCreated & ShortIdentifiable {
   grouping: Int!
   hasPenalties: Boolean!
 
-  "the attributes of this entity"
+  "The attributes of this entity"
   attributes(
     before: PaginationCursor
     after: PaginationCursor
@@ -45,7 +43,7 @@ type Discipline implements Node & UserCreated & ShortIdentifiable {
   createdBy: User!
   "The user who last updated this entity"
   updatedBy: User!
-  "the full AuditLog of this entity"
+  "The full AuditLog of this entity"
   auditLog(
     before: PaginationCursor
     after: PaginationCursor
@@ -53,15 +51,18 @@ type Discipline implements Node & UserCreated & ShortIdentifiable {
     last: Int
   ): AuditConnection!
 }
+"Connection type of discipline"
 type DisciplineConnection {
   count: Int!
   edges: [DisciplineEdge!]!
   pageInfo: PageInfo!
 }
+"Edge type of Discipline"
 type DisciplineEdge {
   cursor: PaginationCursor!
   node: Discipline!
 }
+"Possible subjects of an discipline"
 enum DisciplineSubject {
   TIME
   RUNS
@@ -69,6 +70,7 @@ enum DisciplineSubject {
   POINTS
   OTHER
 }
+"Possible units for an discipline"
 enum DisciplineUnit {
   MICROSECONDS
   MILLISECONDS

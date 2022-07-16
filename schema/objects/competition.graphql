@@ -1,32 +1,26 @@
+"Competition"
 type Competition implements Node & UserCreated & ShortIdentifiable {
   "Globally unique id"
   gid: ID!
   "Globally unique id with timeliness check"
   tid: AmseTID!
 
-  "short id"
   short: Short!
-
-  "name of the competition"
   name: String!
-  "description of the competition"
   description: String
 
-  "all disciplines connected to this competition"
   disciplines(
     before: PaginationCursor
     after: PaginationCursor
     first: Int
     last: Int
   ): CompetitionDisciplineRelConnection!
-  "all groups of this competition"
   groups(
     before: PaginationCursor
     after: PaginationCursor
     first: Int
     last: Int
   ): GroupConnection!
-  "all participants assigned to this competition"
   participants(
     before: PaginationCursor
     after: PaginationCursor
@@ -34,7 +28,7 @@ type Competition implements Node & UserCreated & ShortIdentifiable {
     last: Int
   ): ParticipantConnection!
 
-  "the attributes of this entity"
+  "The attributes of this entity"
   attributes(
     before: PaginationCursor
     after: PaginationCursor
@@ -51,7 +45,7 @@ type Competition implements Node & UserCreated & ShortIdentifiable {
   createdBy: User!
   "The user who last updated this entity"
   updatedBy: User!
-  "the full AuditLog of this entity"
+  "The full AuditLog of this entity"
   auditLog(
     before: PaginationCursor
     after: PaginationCursor
@@ -59,16 +53,19 @@ type Competition implements Node & UserCreated & ShortIdentifiable {
     last: Int
   ): AuditConnection!
 }
+"Connection type of Competition"
 type CompetitionConnection {
   count: Int!
   edges: [CompetitionEdge!]!
   pageInfo: PageInfo!
 }
+"Connection type of Competition"
 type CompetitionEdge {
   cursor: PaginationCursor!
   node: Competition!
 }
 
+"Relation type between Competition and Discipline containing information"
 type CompetitionDisciplineRel implements Node & UserCreated {
   "Globally unique id"
   gid: ID!
@@ -86,7 +83,7 @@ type CompetitionDisciplineRel implements Node & UserCreated {
   qualification: Boolean!
   position: Int!
 
-  "the attributes of this entity"
+  "The attributes of this entity"
   attributes(
     before: PaginationCursor
     after: PaginationCursor
@@ -103,7 +100,7 @@ type CompetitionDisciplineRel implements Node & UserCreated {
   createdBy: User!
   "The user who last updated this entity"
   updatedBy: User!
-  "the full AuditLog of this entity"
+  "The full AuditLog of this entity"
   auditLog(
     before: PaginationCursor
     after: PaginationCursor
@@ -111,11 +108,13 @@ type CompetitionDisciplineRel implements Node & UserCreated {
     last: Int
   ): AuditConnection!
 }
+"Connection type of CompetitionDisciplineRel"
 type CompetitionDisciplineRelConnection {
   count: Int!
   edges: [CompetitionDisciplineRelEdge!]!
   pageInfo: PageInfo!
 }
+"Edge type of CompetitionDisciplineRel"
 type CompetitionDisciplineRelEdge {
   cursor: PaginationCursor!
   node: CompetitionDisciplineRel!

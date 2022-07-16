@@ -1,14 +1,12 @@
+"Team"
 type Team implements Node & UserCreated & ShortIdentifiable {
   "Globally unique id"
   gid: ID!
   "Globally unique id with timeliness check"
   tid: AmseTID!
 
-  "short id"
   short: Short!
-  "name"
   name: String!
-  "description"
   description: String
 
   participants(
@@ -24,7 +22,7 @@ type Team implements Node & UserCreated & ShortIdentifiable {
     last: Int
   ): ScoringConnection!
 
-  "the attributes of this entity"
+  "The attributes of this entity"
   attributes(
     before: PaginationCursor
     after: PaginationCursor
@@ -41,7 +39,7 @@ type Team implements Node & UserCreated & ShortIdentifiable {
   createdBy: User!
   "The user who last updated this entity"
   updatedBy: User!
-  "the full AuditLog of this entity"
+  "The full AuditLog of this entity"
   auditLog(
     before: PaginationCursor
     after: PaginationCursor
@@ -49,11 +47,13 @@ type Team implements Node & UserCreated & ShortIdentifiable {
     last: Int
   ): AuditConnection!
 }
+"Connection type of Teamn"
 type TeamConnection {
   count: Int!
   edges: [TeamEdge!]!
   pageInfo: PageInfo!
 }
+"Edge type of team"
 type TeamEdge {
   cursor: PaginationCursor!
   node: Team!

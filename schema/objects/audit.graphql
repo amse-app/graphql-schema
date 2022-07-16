@@ -1,3 +1,4 @@
+"AuditEntry"
 type AuditEntry implements Node {
   "Globally unique id"
   gid: ID!
@@ -13,17 +14,20 @@ type AuditEntry implements Node {
   to: Node
   action: AuditAction!
 }
+"Actions that trigger an AuditEntry"
 enum AuditAction {
   CREATE
   UPDATE_FIELD
   UPDATE_RELATION
   ARCHIVED
 }
+"Connection type of AuditEntry"
 type AuditConnection {
   count: Int!
   edges: [AuditEntryEdge!]!
   pageInfo: PageInfo!
 }
+"Connection type of AuditEntry"
 type AuditEntryEdge {
   cursor: PaginationCursor!
   node: AuditEntry!

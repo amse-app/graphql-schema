@@ -5,11 +5,11 @@ type Event implements Node & UserCreated {
   "Globally unique id with timeliness"
   tid: AmseTID!
 
-  "unique identifier for this event"
+  "Unique identifier for this event"
   id: String!
-  "name of this event"
+  "Name of this event"
   name: String!
-  "description of this event"
+  "Description of this event"
   description: String
 
   "The user responsible for this event"

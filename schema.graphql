@@ -1,3 +1,4 @@
+"An User of this system; only entity not dependant of an event"
 type User implements Node & UserCreated {
   "Globally unique id"
   gid: ID!
@@ -18,7 +19,7 @@ type User implements Node & UserCreated {
     last: Int
   ): UserEventsRelConnection!
 
-  "the attributes of this entity"
+  "The attributes of this entity"
   attributes(
     before: PaginationCursor
     after: PaginationCursor
@@ -35,7 +36,7 @@ type User implements Node & UserCreated {
   createdBy: User!
   "The user who last updated this user"
   updatedBy: User!
-  "the full AuditLog of this user"
+  "The full AuditLog of this user"
   auditLog(
     before: PaginationCursor
     after: PaginationCursor
@@ -43,16 +44,19 @@ type User implements Node & UserCreated {
     last: Int
   ): AuditConnection!
 }
+"Connection type of User"
 type UserConnection {
   count: Int!
   edges: [UserEdge!]!
   pageInfo: PageInfo!
 }
+"Edge type of User"
 type UserEdge {
   cursor: PaginationCursor!
   node: User!
 }
 
+"Relation type between User and Event, which includes the according permissions of the user"
 type UserEventsRel implements Node & UserCreated {
   "Globally unique id"
   gid: ID!
@@ -63,6 +67,15 @@ type UserEventsRel implements Node & UserCreated {
   user: User!
   permissions: [Permission!]!
 
+  "The attributes of this entity"
+  attributes(
+    before: PaginationCursor
+    after: PaginationCursor
+    first: Int
+    last: Int
+  ): AttributeValueConnection!
+  "Wether this entity is archived"
+  archived: Boolean!
   "The creation date of this UsersEventsRel"
   createdAt: DateTime!
   "The last time this UsersEventsRel was updated"
@@ -71,7 +84,7 @@ type UserEventsRel implements Node & UserCreated {
   createdBy: User!
   "The user who last updated this UsersEventsRel"
   updatedBy: User!
-  "the full AuditLog of this UsersEventsRel"
+  "The full AuditLog of this UsersEventsRel"
   auditLog(
     before: PaginationCursor
     after: PaginationCursor
@@ -79,11 +92,13 @@ type UserEventsRel implements Node & UserCreated {
     last: Int
   ): AuditConnection!
 }
+"Connection type of UserEventsRel"
 type UserEventsRelConnection {
   count: Int!
   edges: [UserEventsRelEdge!]!
   pageInfo: PageInfo!
 }
+"Edge type of UserEventsRel"
 type UserEventsRelEdge {
   cursor: PaginationCursor!
   node: UserEventsRel!
@@ -112,9 +127,6 @@ scalar Date
 "A Date with time serialized as int in milliseconds since unix epoch"
 scalar DateTime
 
-"A Duration in milliseconds"
-scalar Duration
-
 "The Node interface for refetching"
 interface Node {
   "Globally unique id"
@@ -125,7 +137,7 @@ interface Node {
 
 "The interface for user created and managed entities"
 interface UserCreated {
-  "the attributes of this entity"
+  "The attributes of this entity"
   attributes(
     before: PaginationCursor
     after: PaginationCursor
@@ -142,7 +154,7 @@ interface UserCreated {
   createdBy: User!
   "The user who last updated this entity"
   updatedBy: User!
-  "the full AuditLog of this entity"
+  "The full AuditLog of this entity"
   auditLog(
     before: PaginationCursor
     after: PaginationCursor
@@ -151,23 +163,21 @@ interface UserCreated {
   ): AuditConnection!
 }
 
-"id with a length of 4; unique in one event"
+"Id with a length of 4; unique in one event"
 scalar Short
 
+"An entity which is identifiable by its short id"
 interface ShortIdentifiable implements Node & UserCreated {
   "Globally unique id"
   gid: ID!
   "Globally unique id with timeliness check"
   tid: AmseTID!
 
-  "short id"
   short: Short!
-  "name"
   name: String!
-  "description"
   description: String
 
-  "the attributes of this entity"
+  "The attributes of this entity"
   attributes(
     before: PaginationCursor
     after: PaginationCursor
@@ -184,7 +194,7 @@ interface ShortIdentifiable implements Node & UserCreated {
   createdBy: User!
   "The user who last updated this entity"
   updatedBy: User!
-  "the full AuditLog of this entity"
+  "The full AuditLog of this entity"
   auditLog(
     before: PaginationCursor
     after: PaginationCursor
@@ -222,17 +232,15 @@ type PageInfo {
 }
 "The scalar of the PaginationCursors"
 scalar PaginationCursor
+"Team"
 type Team implements Node & UserCreated & ShortIdentifiable {
   "Globally unique id"
   gid: ID!
   "Globally unique id with timeliness check"
   tid: AmseTID!
 
-  "short id"
   short: Short!
-  "name"
   name: String!
-  "description"
   description: String
 
   participants(
@@ -248,7 +256,7 @@ type Team implements Node & UserCreated & ShortIdentifiable {
     last: Int
   ): ScoringConnection!
 
-  "the attributes of this entity"
+  "The attributes of this entity"
   attributes(
     before: PaginationCursor
     after: PaginationCursor
@@ -265,7 +273,7 @@ type Team implements Node & UserCreated & ShortIdentifiable {
   createdBy: User!
   "The user who last updated this entity"
   updatedBy: User!
-  "the full AuditLog of this entity"
+  "The full AuditLog of this entity"
   auditLog(
     before: PaginationCursor
     after: PaginationCursor
@@ -273,15 +281,18 @@ type Team implements Node & UserCreated & ShortIdentifiable {
     last: Int
   ): AuditConnection!
 }
+"Connection type of Teamn"
 type TeamConnection {
   count: Int!
   edges: [TeamEdge!]!
   pageInfo: PageInfo!
 }
+"Edge type of team"
 type TeamEdge {
   cursor: PaginationCursor!
   node: Team!
 }
+"AuditEntry"
 type AuditEntry implements Node {
   "Globally unique id"
   gid: ID!
@@ -297,21 +308,25 @@ type AuditEntry implements Node {
   to: Node
   action: AuditAction!
 }
+"Actions that trigger an AuditEntry"
 enum AuditAction {
   CREATE
   UPDATE_FIELD
   UPDATE_RELATION
   ARCHIVED
 }
+"Connection type of AuditEntry"
 type AuditConnection {
   count: Int!
   edges: [AuditEntryEdge!]!
   pageInfo: PageInfo!
 }
+"Connection type of AuditEntry"
 type AuditEntryEdge {
   cursor: PaginationCursor!
   node: AuditEntry!
 }
+"Result"
 type Result implements Node & UserCreated {
   "Globally unique id"
   gid: ID!
@@ -323,7 +338,7 @@ type Result implements Node & UserCreated {
   raw: Int!
   points: Int!
 
-  "the attributes of this entity"
+  "The attributes of this entity"
   attributes(
     before: PaginationCursor
     after: PaginationCursor
@@ -340,7 +355,7 @@ type Result implements Node & UserCreated {
   createdBy: User!
   "The user who last updated this entity"
   updatedBy: User!
-  "the full AuditLog of this entity"
+  "The full AuditLog of this entity"
   auditLog(
     before: PaginationCursor
     after: PaginationCursor
@@ -348,44 +363,40 @@ type Result implements Node & UserCreated {
     last: Int
   ): AuditConnection!
 }
+"Connection type of Result"
 type ResultConnection {
   count: Int!
   edges: [ResultEdge!]!
   pageInfo: PageInfo!
 }
+"Edge type of Result"
 type ResultEdge {
   cursor: PaginationCursor!
   node: Result!
 }
+"Competition"
 type Competition implements Node & UserCreated & ShortIdentifiable {
   "Globally unique id"
   gid: ID!
   "Globally unique id with timeliness check"
   tid: AmseTID!
 
-  "short id"
   short: Short!
-
-  "name of the competition"
   name: String!
-  "description of the competition"
   description: String
 
-  "all disciplines connected to this competition"
   disciplines(
     before: PaginationCursor
     after: PaginationCursor
     first: Int
     last: Int
   ): CompetitionDisciplineRelConnection!
-  "all groups of this competition"
   groups(
     before: PaginationCursor
     after: PaginationCursor
     first: Int
     last: Int
   ): GroupConnection!
-  "all participants assigned to this competition"
   participants(
     before: PaginationCursor
     after: PaginationCursor
@@ -393,7 +404,7 @@ type Competition implements Node & UserCreated & ShortIdentifiable {
     last: Int
   ): ParticipantConnection!
 
-  "the attributes of this entity"
+  "The attributes of this entity"
   attributes(
     before: PaginationCursor
     after: PaginationCursor
@@ -410,7 +421,7 @@ type Competition implements Node & UserCreated & ShortIdentifiable {
   createdBy: User!
   "The user who last updated this entity"
   updatedBy: User!
-  "the full AuditLog of this entity"
+  "The full AuditLog of this entity"
   auditLog(
     before: PaginationCursor
     after: PaginationCursor
@@ -418,16 +429,19 @@ type Competition implements Node & UserCreated & ShortIdentifiable {
     last: Int
   ): AuditConnection!
 }
+"Connection type of Competition"
 type CompetitionConnection {
   count: Int!
   edges: [CompetitionEdge!]!
   pageInfo: PageInfo!
 }
+"Connection type of Competition"
 type CompetitionEdge {
   cursor: PaginationCursor!
   node: Competition!
 }
 
+"Relation type between Competition and Discipline containing information"
 type CompetitionDisciplineRel implements Node & UserCreated {
   "Globally unique id"
   gid: ID!
@@ -445,7 +459,7 @@ type CompetitionDisciplineRel implements Node & UserCreated {
   qualification: Boolean!
   position: Int!
 
-  "the attributes of this entity"
+  "The attributes of this entity"
   attributes(
     before: PaginationCursor
     after: PaginationCursor
@@ -462,7 +476,7 @@ type CompetitionDisciplineRel implements Node & UserCreated {
   createdBy: User!
   "The user who last updated this entity"
   updatedBy: User!
-  "the full AuditLog of this entity"
+  "The full AuditLog of this entity"
   auditLog(
     before: PaginationCursor
     after: PaginationCursor
@@ -470,24 +484,25 @@ type CompetitionDisciplineRel implements Node & UserCreated {
     last: Int
   ): AuditConnection!
 }
+"Connection type of CompetitionDisciplineRel"
 type CompetitionDisciplineRelConnection {
   count: Int!
   edges: [CompetitionDisciplineRelEdge!]!
   pageInfo: PageInfo!
 }
+"Edge type of CompetitionDisciplineRel"
 type CompetitionDisciplineRelEdge {
   cursor: PaginationCursor!
   node: CompetitionDisciplineRel!
 }
+"Participant"
 type Participant implements Node & UserCreated {
   "Globally unique id"
   gid: ID!
   "Globally unique id with timeliness check"
   tid: AmseTID!
 
-  "id"
   id: String!
-  "name"
   name: String!
   birthdate: Date
   sex: ParticipantSex
@@ -518,7 +533,7 @@ type Participant implements Node & UserCreated {
     last: Int
   ): ScoringConnection!
 
-  "the attributes of this entity"
+  "The attributes of this entity"
   attributes(
     before: PaginationCursor
     after: PaginationCursor
@@ -535,7 +550,7 @@ type Participant implements Node & UserCreated {
   createdBy: User!
   "The user who last updated this entity"
   updatedBy: User!
-  "the full AuditLog of this entity"
+  "The full AuditLog of this entity"
   auditLog(
     before: PaginationCursor
     after: PaginationCursor
@@ -543,33 +558,34 @@ type Participant implements Node & UserCreated {
     last: Int
   ): AuditConnection!
 }
+"Connection type of participant"
 type ParticipantConnection {
   count: Int!
   edges: [ParticipantEdge!]!
   pageInfo: PageInfo!
 }
+"Edge type of participant"
 type ParticipantEdge {
   cursor: PaginationCursor!
   node: Participant!
 }
+"Possible sexes of a participant"
 enum ParticipantSex {
   MALE
   FEMALE
   DIVERSE
 }
+"ConversionFunction scalar; serializes to string"
 scalar ConversionFunction
-
+"Discipline"
 type Discipline implements Node & UserCreated & ShortIdentifiable {
   "Globally unique id"
   gid: ID!
   "Globally unique id with timeliness check"
   tid: AmseTID!
 
-  "short id"
   short: Short!
-  "name"
   name: String!
-  "description"
   description: String
 
   conversionFunction: ConversionFunction!
@@ -587,7 +603,7 @@ type Discipline implements Node & UserCreated & ShortIdentifiable {
   grouping: Int!
   hasPenalties: Boolean!
 
-  "the attributes of this entity"
+  "The attributes of this entity"
   attributes(
     before: PaginationCursor
     after: PaginationCursor
@@ -604,7 +620,7 @@ type Discipline implements Node & UserCreated & ShortIdentifiable {
   createdBy: User!
   "The user who last updated this entity"
   updatedBy: User!
-  "the full AuditLog of this entity"
+  "The full AuditLog of this entity"
   auditLog(
     before: PaginationCursor
     after: PaginationCursor
@@ -612,15 +628,18 @@ type Discipline implements Node & UserCreated & ShortIdentifiable {
     last: Int
   ): AuditConnection!
 }
+"Connection type of discipline"
 type DisciplineConnection {
   count: Int!
   edges: [DisciplineEdge!]!
   pageInfo: PageInfo!
 }
+"Edge type of Discipline"
 type DisciplineEdge {
   cursor: PaginationCursor!
   node: Discipline!
 }
+"Possible subjects of an discipline"
 enum DisciplineSubject {
   TIME
   RUNS
@@ -628,6 +647,7 @@ enum DisciplineSubject {
   POINTS
   OTHER
 }
+"Possible units for an discipline"
 enum DisciplineUnit {
   MICROSECONDS
   MILLISECONDS
@@ -643,18 +663,17 @@ enum DisciplineUnit {
 
   OTHER
 }
+"The GroupAssignCriteria scalar; serializes to string;"
 scalar GroupAssignCriteria
+"Group"
 type Group implements Node & UserCreated & ShortIdentifiable {
   "Globally unique id"
   gid: ID!
   "Globally unique id with timeliness check"
   tid: AmseTID!
 
-  "short id"
   short: Short!
-  "name"
   name: String!
-  "description"
   description: String
 
   competition: Competition!
@@ -689,7 +708,7 @@ type Group implements Node & UserCreated & ShortIdentifiable {
   """
   assignCriteria: GroupAssignCriteria!
 
-  "the attributes of this entity"
+  "The attributes of this entity"
   attributes(
     before: PaginationCursor
     after: PaginationCursor
@@ -706,7 +725,7 @@ type Group implements Node & UserCreated & ShortIdentifiable {
   createdBy: User!
   "The user who last updated this entity"
   updatedBy: User!
-  "the full AuditLog of this entity"
+  "The full AuditLog of this entity"
   auditLog(
     before: PaginationCursor
     after: PaginationCursor
@@ -714,26 +733,38 @@ type Group implements Node & UserCreated & ShortIdentifiable {
     last: Int
   ): AuditConnection!
 }
+"Connection type of Group"
 type GroupConnection {
   count: Int!
   edges: [GroupEdge!]!
   pageInfo: PageInfo!
 }
+"Edge Type of Group"
 type GroupEdge {
   cursor: PaginationCursor!
   node: Group!
 }
+"An attribute"
 type Attribute implements Node & UserCreated {
   "Globally unique id"
   gid: ID!
   "Globally unique id with timeliness check"
   tid: AmseTID!
 
+  "The unique id of this Attribute"
   id: String!
+  "The name of the attribute"
   name: String!
+  "The description of the attribute"
   description: String
+  """
+  Is this attribute special?
+  (set by the server, with special meaning to the business logic)
+  """
   special: Boolean!
+  "Which entities can possess this attribute"
   of: [AttributeLocation!]!
+  "All values of this attribute"
   values(
     before: PaginationCursor
     after: PaginationCursor
@@ -741,7 +772,7 @@ type Attribute implements Node & UserCreated {
     last: Int
   ): AttributeValueConnection!
 
-  "the attributes of this entity"
+  "The attributes of this entity"
   attributes(
     before: PaginationCursor
     after: PaginationCursor
@@ -758,7 +789,7 @@ type Attribute implements Node & UserCreated {
   createdBy: User!
   "The user who last updated this entity"
   updatedBy: User!
-  "the full AuditLog of this entity"
+  "The full AuditLog of this entity"
   auditLog(
     before: PaginationCursor
     after: PaginationCursor
@@ -766,15 +797,18 @@ type Attribute implements Node & UserCreated {
     last: Int
   ): AuditConnection!
 }
+"The Connection type of Attribute"
 type AttributeConnection {
   count: Int!
   edges: [AttributeEdge!]!
   pageInfo: PageInfo!
 }
+"The Edge type of Attribute"
 type AttributeEdge {
   cursor: PaginationCursor!
   node: Attribute!
 }
+"Possible Entities that can have an attribute"
 enum AttributeLocation {
   DISCIPLINE
   COMPETITION
@@ -788,17 +822,21 @@ enum AttributeLocation {
   EVENT
 }
 
+"The link between an Entity and an attribute with its value"
 type AttributeValue implements Node & UserCreated {
   "Globally unique id"
   gid: ID!
   "Globally unique id with timeliness check"
   tid: AmseTID!
 
+  "The value of the attribute with node"
   value: String!
+  "The attribute"
   attribute: Attribute!
+  "The node"
   node: Node!
 
-  "the attributes of this entity"
+  "The attributes of this entity"
   attributes(
     before: PaginationCursor
     after: PaginationCursor
@@ -815,7 +853,7 @@ type AttributeValue implements Node & UserCreated {
   createdBy: User!
   "The user who last updated this entity"
   updatedBy: User!
-  "the full AuditLog of this entity"
+  "The full AuditLog of this entity"
   auditLog(
     before: PaginationCursor
     after: PaginationCursor
@@ -823,27 +861,39 @@ type AttributeValue implements Node & UserCreated {
     last: Int
   ): AuditConnection!
 }
+"The connection type of AttributeValue"
 type AttributeValueConnection {
+  "The count of all AttributeValues"
   count: Int!
+  "The retrieved edges"
   edges: [AttributeValueEdge!]!
+  "The pageInfo to this connection"
   pageInfo: PageInfo!
 }
+"The Edge type of AttributeValue"
 type AttributeValueEdge {
+  "The cursor of this edge"
   cursor: PaginationCursor!
+  "The node of this Edge"
   node: AttributeValue!
 }
+"What can have a scoring"
 union Scoreable = Participant | Team
+"The scoring of a participant or a team"
 type Scoring implements Node & UserCreated {
   "Globally unique id"
   gid: ID!
   "Globally unique id with timeliness check"
   tid: AmseTID!
 
+  "The Group of this Scoring"
   group: Group!
+  "The value that was scored"
   value: Int!
+  "Who scored the value"
   of: Scoreable!
 
-  "the attributes of this entity"
+  "The attributes of this entity"
   attributes(
     before: PaginationCursor
     after: PaginationCursor
@@ -860,7 +910,7 @@ type Scoring implements Node & UserCreated {
   createdBy: User!
   "The user who last updated this entity"
   updatedBy: User!
-  "the full AuditLog of this entity"
+  "The full AuditLog of this entity"
   auditLog(
     before: PaginationCursor
     after: PaginationCursor
@@ -868,13 +918,20 @@ type Scoring implements Node & UserCreated {
     last: Int
   ): AuditConnection!
 }
+"Connection type of Scoring"
 type ScoringConnection {
+  "The count of all scorings in this connection"
   count: Int!
+  "The retrieved edges"
   edges: [ScoringEdge!]!
+  "The PageInfo to this Connection"
   pageInfo: PageInfo!
 }
+"Edge type of Scoring"
 type ScoringEdge {
+  "The pagination cursor of this edge"
   cursor: PaginationCursor!
+  "The node of this edge"
   node: Scoring!
 }
 "Events are the clients of the application, which seperate data across the graph"
@@ -884,11 +941,11 @@ type Event implements Node & UserCreated {
   "Globally unique id with timeliness"
   tid: AmseTID!
 
-  "unique identifier for this event"
+  "Unique identifier for this event"
   id: String!
-  "name of this event"
+  "Name of this event"
   name: String!
-  "description of this event"
+  "Description of this event"
   description: String
 
   "The user responsible for this event"

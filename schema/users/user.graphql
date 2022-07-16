@@ -1,3 +1,4 @@
+"An User of this system; only entity not dependant of an event"
 type User implements Node & UserCreated {
   "Globally unique id"
   gid: ID!
@@ -18,7 +19,7 @@ type User implements Node & UserCreated {
     last: Int
   ): UserEventsRelConnection!
 
-  "the attributes of this entity"
+  "The attributes of this entity"
   attributes(
     before: PaginationCursor
     after: PaginationCursor
@@ -35,7 +36,7 @@ type User implements Node & UserCreated {
   createdBy: User!
   "The user who last updated this user"
   updatedBy: User!
-  "the full AuditLog of this user"
+  "The full AuditLog of this user"
   auditLog(
     before: PaginationCursor
     after: PaginationCursor
@@ -43,16 +44,19 @@ type User implements Node & UserCreated {
     last: Int
   ): AuditConnection!
 }
+"Connection type of User"
 type UserConnection {
   count: Int!
   edges: [UserEdge!]!
   pageInfo: PageInfo!
 }
+"Edge type of User"
 type UserEdge {
   cursor: PaginationCursor!
   node: User!
 }
 
+"Relation type between User and Event, which includes the according permissions of the user"
 type UserEventsRel implements Node & UserCreated {
   "Globally unique id"
   gid: ID!
@@ -63,7 +67,7 @@ type UserEventsRel implements Node & UserCreated {
   user: User!
   permissions: [Permission!]!
 
-  "the attributes of this entity"
+  "The attributes of this entity"
   attributes(
     before: PaginationCursor
     after: PaginationCursor
@@ -80,7 +84,7 @@ type UserEventsRel implements Node & UserCreated {
   createdBy: User!
   "The user who last updated this UsersEventsRel"
   updatedBy: User!
-  "the full AuditLog of this UsersEventsRel"
+  "The full AuditLog of this UsersEventsRel"
   auditLog(
     before: PaginationCursor
     after: PaginationCursor
@@ -88,11 +92,13 @@ type UserEventsRel implements Node & UserCreated {
     last: Int
   ): AuditConnection!
 }
+"Connection type of UserEventsRel"
 type UserEventsRelConnection {
   count: Int!
   edges: [UserEventsRelEdge!]!
   pageInfo: PageInfo!
 }
+"Edge type of UserEventsRel"
 type UserEventsRelEdge {
   cursor: PaginationCursor!
   node: UserEventsRel!

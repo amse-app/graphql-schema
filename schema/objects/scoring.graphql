@@ -1,15 +1,20 @@
+"What can have a scoring"
 union Scoreable = Participant | Team
+"The scoring of a participant or a team"
 type Scoring implements Node & UserCreated {
   "Globally unique id"
   gid: ID!
   "Globally unique id with timeliness check"
   tid: AmseTID!
 
+  "The Group of this Scoring"
   group: Group!
+  "The value that was scored"
   value: Int!
+  "Who scored the value"
   of: Scoreable!
 
-  "the attributes of this entity"
+  "The attributes of this entity"
   attributes(
     before: PaginationCursor
     after: PaginationCursor
@@ -26,7 +31,7 @@ type Scoring implements Node & UserCreated {
   createdBy: User!
   "The user who last updated this entity"
   updatedBy: User!
-  "the full AuditLog of this entity"
+  "The full AuditLog of this entity"
   auditLog(
     before: PaginationCursor
     after: PaginationCursor
@@ -34,12 +39,19 @@ type Scoring implements Node & UserCreated {
     last: Int
   ): AuditConnection!
 }
+"Connection type of Scoring"
 type ScoringConnection {
+  "The count of all scorings in this connection"
   count: Int!
+  "The retrieved edges"
   edges: [ScoringEdge!]!
+  "The PageInfo to this Connection"
   pageInfo: PageInfo!
 }
+"Edge type of Scoring"
 type ScoringEdge {
+  "The pagination cursor of this edge"
   cursor: PaginationCursor!
+  "The node of this edge"
   node: Scoring!
 }

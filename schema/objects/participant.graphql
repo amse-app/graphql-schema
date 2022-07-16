@@ -1,12 +1,11 @@
+"Participant"
 type Participant implements Node & UserCreated {
   "Globally unique id"
   gid: ID!
   "Globally unique id with timeliness check"
   tid: AmseTID!
 
-  "id"
   id: String!
-  "name"
   name: String!
   birthdate: Date
   sex: ParticipantSex
@@ -37,7 +36,7 @@ type Participant implements Node & UserCreated {
     last: Int
   ): ScoringConnection!
 
-  "the attributes of this entity"
+  "The attributes of this entity"
   attributes(
     before: PaginationCursor
     after: PaginationCursor
@@ -54,7 +53,7 @@ type Participant implements Node & UserCreated {
   createdBy: User!
   "The user who last updated this entity"
   updatedBy: User!
-  "the full AuditLog of this entity"
+  "The full AuditLog of this entity"
   auditLog(
     before: PaginationCursor
     after: PaginationCursor
@@ -62,15 +61,18 @@ type Participant implements Node & UserCreated {
     last: Int
   ): AuditConnection!
 }
+"Connection type of participant"
 type ParticipantConnection {
   count: Int!
   edges: [ParticipantEdge!]!
   pageInfo: PageInfo!
 }
+"Edge type of participant"
 type ParticipantEdge {
   cursor: PaginationCursor!
   node: Participant!
 }
+"Possible sexes of a participant"
 enum ParticipantSex {
   MALE
   FEMALE
